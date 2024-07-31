@@ -7,7 +7,7 @@ void main() {
   runApp(MyApp());
 }
 
-//ホームページ
+//アプリのテーマとホームページを設定
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  CalendarFormat _calendarFormat = CalendarFormat.month; //カレンダーの表示形式
+  DateTime _focusedDay = DateTime.now(); //現在フォーカスされている日付を保持
+  DateTime? _selectedDay; //ユーザが選択した日付を保持
   Map<DateTime, List<String>> _events = {};
 
   void _addEvent(String event) {
