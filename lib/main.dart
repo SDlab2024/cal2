@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'dart:io' show Platform;
 
 void main() {
   runApp(MyApp());
@@ -83,27 +81,15 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text(event),
             )),
           ],
-          if (Platform.isAndroid)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  _showAddEventDialog(context);
-                },
-                child: Text('Add Event'),
-              ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                _showAddEventDialog(context);
+              },
+              child: Text('Add Event'),
             ),
-          if (Platform.isIOS)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CupertinoButton(
-                color: CupertinoColors.activeBlue,
-                onPressed: () {
-                  _showAddEventDialog(context);
-                },
-                child: Text('Add Event'),
-              ),
-            ),
+          ),
         ],
       ),
     );
@@ -112,62 +98,32 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showAddEventDialog(BuildContext context) {
     TextEditingController _eventController = TextEditingController();
 
-    if (Platform.isAndroid) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Add Event'),
-            content: TextField(
-              controller: _eventController,
-              decoration: InputDecoration(labelText: 'Event'),
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add Event'),
+          content: TextField(
+            controller: _eventController,
+            decoration: InputDecoration(labelText: 'Event'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  _addEvent(_eventController.text);
-                  Navigator.of(context).pop();
-                },
-                child: Text('Add'),
-              ),
-            ],
-          );
-        },
-      );
-    } else if (Platform.isIOS) {
-      showCupertinoDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Text('Add Event'),
-            content: CupertinoTextField(
-              controller: _eventController,
-              placeholder: 'Event',
+            TextButton(
+              onPressed: () {
+                _addEvent(_eventController.text);
+                Navigator.of(context).pop();
+              },
+              child: Text('Add'),
             ),
-            actions: [
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Cancel'),
-              ),
-              CupertinoDialogAction(
-                onPressed: () {
-                  _addEvent(_eventController.text);
-                  Navigator.of(context).pop();
-                },
-                child: Text('Add'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+          ],
+        );
+      },
+    );
   }
 }
